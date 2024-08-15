@@ -21,7 +21,7 @@ class Study(models.Model):
     link = models.URLField(**NULLABLE, verbose_name='ссылка на обучение')
     plan = models.CharField(max_length=100, **NULLABLE, verbose_name='план обучения')
     study_start = models.DateField(**NULLABLE, verbose_name='начало обучения')
-    student = models.ManyToManyField(Students, verbose_name='студент')
+    student = models.ManyToManyField(Students, **NULLABLE, verbose_name='студент')
     updated_at = models.DateTimeField(verbose_name='время обновления', **NULLABLE)
 
     def __str__(self):
