@@ -14,6 +14,13 @@ class StudyListView(ListAPIView):
     pagination_class = Pagination
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Study.objects.all()
+        else:
+            return Study.objects.filter(owner=user)
+
 
 class StudyDetailView(RetrieveAPIView):
     """ Study list API View """
@@ -21,6 +28,13 @@ class StudyDetailView(RetrieveAPIView):
     serializer_class = StudySerializer
     queryset = Study.objects.all()
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Study.objects.all()
+        else:
+            return Study.objects.filter(owner=user)
 
 
 class StudyCreateView(CreateAPIView):
@@ -38,6 +52,13 @@ class StudyUpdateView(UpdateAPIView):
     queryset = Study.objects.all()
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Study.objects.all()
+        else:
+            return Study.objects.filter(owner=user)
+
 
 class StudyDeleteView(DestroyAPIView):
     """ Study delete API View """
@@ -45,6 +66,13 @@ class StudyDeleteView(DestroyAPIView):
     serializer_class = StudySerializer
     queryset = Study.objects.all()
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Study.objects.all()
+        else:
+            return Study.objects.filter(owner=user)
 
 
 class MaterialsListView(ListAPIView):
@@ -57,7 +85,7 @@ class MaterialsListView(ListAPIView):
 
 
 class MaterialsDetailView(RetrieveAPIView):
-    """ Materials list API View """
+    """ Materials retrieve API View """
 
     serializer_class = MaterialsSerializer
     queryset = Materials.objects.all()
