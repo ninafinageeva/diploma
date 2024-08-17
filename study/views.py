@@ -1,7 +1,6 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, \
     ListCreateAPIView
 from rest_framework.permissions import IsAuthenticated
-
 from study.models import Study, Materials, Test, Question, Answer
 from study.paginators import Pagination
 from study.serializers import StudySerializer, MaterialsSerializer, TestSerializer, QuestionSerializer, AnswerSerializer
@@ -29,7 +28,7 @@ class StudyDetailView(RetrieveAPIView):
 
     serializer_class = StudySerializer
     queryset = Study.objects.all()
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsAuthenticated | IsOwner]
 
     def get_queryset(self):
         user = self.request.user
@@ -52,7 +51,7 @@ class StudyUpdateView(UpdateAPIView):
 
     serializer_class = StudySerializer
     queryset = Study.objects.all()
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsAuthenticated | IsOwner]
 
     def get_queryset(self):
         user = self.request.user
@@ -67,7 +66,7 @@ class StudyDeleteView(DestroyAPIView):
 
     serializer_class = StudySerializer
     queryset = Study.objects.all()
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsAuthenticated | IsOwner]
 
     def get_queryset(self):
         user = self.request.user
@@ -91,7 +90,7 @@ class MaterialsDetailView(RetrieveAPIView):
 
     serializer_class = MaterialsSerializer
     queryset = Materials.objects.all()
-    permission_classes = [IsAuthenticated, IsAdmin, IsOwner]
+    permission_classes = [IsAuthenticated | IsAdmin | IsOwner]
 
 
 class MaterialsCreateView(CreateAPIView):
@@ -99,7 +98,7 @@ class MaterialsCreateView(CreateAPIView):
 
     serializer_class = MaterialsSerializer
     queryset = Materials.objects.all()
-    permission_classes = [IsAuthenticated, IsAdmin]
+    permission_classes = [IsAuthenticated | IsAdmin]
 
 
 class MaterialsUpdateView(UpdateAPIView):
@@ -107,7 +106,7 @@ class MaterialsUpdateView(UpdateAPIView):
 
     serializer_class = MaterialsSerializer
     queryset = Materials.objects.all()
-    permission_classes = [IsAuthenticated, IsAdmin, IsOwner]
+    permission_classes = [IsAuthenticated | IsAdmin | IsOwner]
 
 
 class MaterialsDeleteView(DestroyAPIView):
@@ -115,7 +114,7 @@ class MaterialsDeleteView(DestroyAPIView):
 
     serializer_class = MaterialsSerializer
     queryset = Materials.objects.all()
-    permission_classes = [IsAuthenticated, IsAdmin]
+    permission_classes = [IsAuthenticated | IsAdmin]
 
 
 class TestCreateAPIView(CreateAPIView):

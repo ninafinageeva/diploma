@@ -3,6 +3,7 @@ from users.models import User, NULLABLE
 
 
 class Study(models.Model):
+    """ Модель обучения """
     title = models.CharField(max_length=100, **NULLABLE, verbose_name='название')
     link = models.URLField(**NULLABLE, verbose_name='ссылка на обучение')
     plan = models.CharField(max_length=100, **NULLABLE, verbose_name='план обучения')
@@ -19,6 +20,7 @@ class Study(models.Model):
 
 
 class Materials(models.Model):
+    """ Модель материалов для обучения """
     title = models.CharField(max_length=100, verbose_name='название лекции')
     content = models.TextField(**NULLABLE, verbose_name='содержание')
     study_materials = models.ForeignKey(Study, **NULLABLE, on_delete=models.CASCADE, verbose_name='материалы обучения')
@@ -33,7 +35,9 @@ class Materials(models.Model):
 
 
 class Test(models.Model):
+    """ Модель тестирования студентов """
     title = models.CharField(max_length=100, verbose_name='название теста')
+    test_materials = models.ForeignKey(Materials, **NULLABLE, on_delete=models.CASCADE, verbose_name='материалы теста')
     description = models.TextField(**NULLABLE, verbose_name='описание теста')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='время создания')
 
@@ -47,6 +51,7 @@ class Test(models.Model):
 
 
 class Question(models.Model):
+    """ Модель вопросов тестирования  """
     text = models.TextField(verbose_name='текст вопроса')
     test = models.ForeignKey(Test, on_delete=models.CASCADE, verbose_name='тест')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='время создания')
@@ -60,6 +65,7 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
+    """ Модель ответов на вопросы по тестированию """
     text = models.CharField(max_length=255, verbose_name='текст ответа')
     question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name='вопрос')
     is_correct = models.BooleanField(default=False, verbose_name='правильный ответ')

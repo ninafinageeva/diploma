@@ -6,11 +6,15 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 class UserRoles(models.TextChoices):
+    """ Модель роли пользователя на платформе """
+
     owner = 'owner', gettext_lazy('owner')
     admin = 'admin', gettext_lazy('admin')
 
 
 class User(AbstractUser):
+    """ Модель пользователя  """
+
     username = None
 
     email = models.EmailField(max_length=250, unique=True, verbose_name='Адрес электронной почты')
