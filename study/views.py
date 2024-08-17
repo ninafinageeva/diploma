@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from study.models import Study, Materials, Test, Question, Answer
 from study.paginators import Pagination
 from study.serializers import StudySerializer, MaterialsSerializer, TestSerializer, QuestionSerializer, AnswerSerializer
+from users.permissions import IsOwner, IsAdmin
 
 
 class StudyListView(ListAPIView):
@@ -28,7 +29,7 @@ class StudyDetailView(RetrieveAPIView):
 
     serializer_class = StudySerializer
     queryset = Study.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwner]
 
     def get_queryset(self):
         user = self.request.user
@@ -51,7 +52,7 @@ class StudyUpdateView(UpdateAPIView):
 
     serializer_class = StudySerializer
     queryset = Study.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwner]
 
     def get_queryset(self):
         user = self.request.user
@@ -66,7 +67,7 @@ class StudyDeleteView(DestroyAPIView):
 
     serializer_class = StudySerializer
     queryset = Study.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwner]
 
     def get_queryset(self):
         user = self.request.user
@@ -90,7 +91,7 @@ class MaterialsDetailView(RetrieveAPIView):
 
     serializer_class = MaterialsSerializer
     queryset = Materials.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdmin, IsOwner]
 
 
 class MaterialsCreateView(CreateAPIView):
@@ -98,7 +99,7 @@ class MaterialsCreateView(CreateAPIView):
 
     serializer_class = MaterialsSerializer
     queryset = Materials.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdmin]
 
 
 class MaterialsUpdateView(UpdateAPIView):
@@ -106,7 +107,7 @@ class MaterialsUpdateView(UpdateAPIView):
 
     serializer_class = MaterialsSerializer
     queryset = Materials.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdmin, IsOwner]
 
 
 class MaterialsDeleteView(DestroyAPIView):
@@ -114,30 +115,48 @@ class MaterialsDeleteView(DestroyAPIView):
 
     serializer_class = MaterialsSerializer
     queryset = Materials.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdmin]
 
 
 class TestCreateAPIView(CreateAPIView):
     queryset = Test.objects.all()
     serializer_class = TestSerializer
+    permission_classes = [IsAdmin]
 
 
 class TestUpdateAPIView(UpdateAPIView):
     queryset = Test.objects.all()
     serializer_class = TestSerializer
+    permission_classes = [IsAdmin]
 
 
 class TestDeleteAPIView(DestroyAPIView):
     queryset = Test.objects.all()
     serializer_class = TestSerializer
+    permission_classes = [IsAdmin]
 
 
 class QuestionListCreateAPIView(ListCreateAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
+    permission_classes = [IsAdmin]
+
+
+class QuestionDeleteAPIView(DestroyAPIView):
+    queryset = Question.objects.all()
+    serializer_class = TestSerializer
+    permission_classes = [IsAdmin]
 
 
 class AnswerListCreateAPIView(ListCreateAPIView):
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
+    permission_classes = [IsAdmin]
+
+
+class AnswerDeleteAPIView(DestroyAPIView):
+    queryset = Answer.objects.all()
+    serializer_class = TestSerializer
+    permission_classes = [IsAdmin]
+
 

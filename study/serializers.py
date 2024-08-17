@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
-
 from study.models import Study, Materials, Test, Question, Answer
-from users.models import User
 
 
 class StudySerializer(serializers.ModelSerializer):
