@@ -31,3 +31,44 @@ class Materials(models.Model):
         verbose_name = 'материал'
         verbose_name_plural = 'материалы'
 
+
+class Test(models.Model):
+    title = models.CharField(max_length=100, verbose_name='название теста')
+    description = models.TextField(**NULLABLE, verbose_name='описание теста')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='время создания')
+
+    def __str__(self):
+        return (f'{self.title}: {self.description}. '
+                f'{self.created_at}')
+
+    class Meta:
+        verbose_name = 'Тест'
+        verbose_name_plural = 'Тесты'
+
+
+class Question(models.Model):
+    text = models.TextField(verbose_name='текст вопроса')
+    test = models.ForeignKey(Test, on_delete=models.CASCADE, verbose_name='тест')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='время создания')
+
+    def __str__(self):
+        return self.text
+
+    class Meta:
+        verbose_name = 'Вопрос'
+        verbose_name_plural = 'Вопросы'
+
+
+class Answer(models.Model):
+    text = models.CharField(max_length=255, verbose_name='текст ответа')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name='вопрос')
+    is_correct = models.BooleanField(default=False, verbose_name='правильный ответ')
+
+    def __str__(self):
+        return f'{self.text} - {self.is_correct}'
+
+    class Meta:
+        verbose_name = 'Ответ'
+        verbose_name_plural = 'Ответы'
+
+

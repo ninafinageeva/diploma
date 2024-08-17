@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
 
-from study.models import Study, Materials
+from study.models import Study, Materials, Test, Question, Answer
 from users.models import User
 
 
@@ -18,4 +18,23 @@ class MaterialsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Materials
         fields = '__all__'
+
+
+class TestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Test
+        fields = '__all__'
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        fields = '__all__'
+
+
+class AnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = '__all__'
+
         

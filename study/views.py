@@ -1,9 +1,10 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, \
+    ListCreateAPIView
 from rest_framework.permissions import IsAuthenticated
 
-from study.models import Study, Materials
+from study.models import Study, Materials, Test, Question, Answer
 from study.paginators import Pagination
-from study.serializers import StudySerializer, MaterialsSerializer
+from study.serializers import StudySerializer, MaterialsSerializer, TestSerializer, QuestionSerializer, AnswerSerializer
 
 
 class StudyListView(ListAPIView):
@@ -114,3 +115,29 @@ class MaterialsDeleteView(DestroyAPIView):
     serializer_class = MaterialsSerializer
     queryset = Materials.objects.all()
     permission_classes = [IsAuthenticated]
+
+
+class TestCreateAPIView(CreateAPIView):
+    queryset = Test.objects.all()
+    serializer_class = TestSerializer
+
+
+class TestUpdateAPIView(UpdateAPIView):
+    queryset = Test.objects.all()
+    serializer_class = TestSerializer
+
+
+class TestDeleteAPIView(DestroyAPIView):
+    queryset = Test.objects.all()
+    serializer_class = TestSerializer
+
+
+class QuestionListCreateAPIView(ListCreateAPIView):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+
+
+class AnswerListCreateAPIView(ListCreateAPIView):
+    queryset = Answer.objects.all()
+    serializer_class = AnswerSerializer
+
